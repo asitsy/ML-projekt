@@ -27,3 +27,5 @@ NUMERIC_FEATURES = [
     "weekly_offline_hours",
     "job_satisfaction_score",
 ]
+
+TARGET_COLUMN = "actual_productivity_score"
