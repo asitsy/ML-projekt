@@ -1,0 +1,10 @@
+__pycache__/ # dla Python cache
+*.pyc
+
+.ipynb_checkpoints/ # dla Jupyter
+
+venv/ # Virtual environments
+.env/
+
+.DS_Store # OS files
+# bo tutaj pliki systemowe generowane przez macOS i nie są częścią projektu
