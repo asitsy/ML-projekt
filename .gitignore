@@ -1,9 +1,12 @@
-__pycache__/ # dla Python cache
+# dla Python cache
+__pycache__/ 
 *.pyc
 
-.ipynb_checkpoints/ # dla Jupyter
+# dla Jupyter
+.ipynb_checkpoints/ 
 
-venv/ # Virtual environments
+# Virtual environments
+venv/
 .env/
 
 .DS_Store # OS files
