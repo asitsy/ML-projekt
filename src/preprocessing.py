@@ -50,3 +50,13 @@ def prepare_data(
     return X_train, X_test, y_train, y_test
 
 
+df = pd.DataFrame()
+X_train, X_test, y_train, y_test = prepare_data(df)
+
+
+preprocessor = build_preprocessing_pipeline()
+
+X_train_processed = preprocessor.fit_transform(X_train)
+X_test_processed = preprocessor.transform(X_test)
+
+
