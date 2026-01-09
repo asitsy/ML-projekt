@@ -9,5 +9,5 @@ __pycache__/
 venv/
 .env/
 
-.DS_Store # OS files
+.DS_Store 
 # bo tutaj pliki systemowe generowane przez macOS i nie są częścią projektu
