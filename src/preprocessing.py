@@ -28,3 +28,25 @@ def build_preprocessing_pipeline() -> ColumnTransformer:
     )
 
     return preprocessor
+
+def prepare_data(
+    df: pd.DataFrame,
+    test_size: float = 0.2,
+    random_state: int = 42,
+):
+    if TARGET_COLUMN not in df.columns:
+        raise ValueError(f"Target column '{TARGET_COLUMN}' not found in dataset")
+
+    X = df.drop(columns=[TARGET_COLUMN])
+    y = df[TARGET_COLUMN]
+
+    X_train, X_test, y_train, y_test = train_test_split(
+        X,
+        y,
+        test_size=test_size,
+        random_state=random_state,
+    )
+
+    return X_train, X_test, y_train, y_test
+
+
