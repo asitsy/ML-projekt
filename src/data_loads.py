@@ -1,5 +1,4 @@
-# Odpowiada za wczytywanie surowych danych z pliku CSV (znajduje się w /data)
-# Nie wykonuje żadnego przetwarzania ani analizy danych
+
 
 import pandas as pd
 from src.config import DATA_PATH
