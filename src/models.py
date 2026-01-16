@@ -1,5 +1,7 @@
 import numpy as np
 from typing import Dict, Any, Optional
+
+#dataclasses дозволяє зручно зберігати результат навчання моделі  
 from dataclasses import dataclass
 
 from sklearn.linear_model import LinearRegression, Ridge
@@ -8,17 +10,22 @@ from sklearn.ensemble import RandomForestRegressor
 
 @dataclass
 class ModelResult:
-    name: str
-    model: Any
-    best_params: Optional[Dict[str, Any]] = None
+    name: str # Назва моделі ( для логів, звіти, порівняння) 
+    model: Any #навчена модель sklearn
+    best_params: Optional[Dict[str, Any]] = None # Це найкращі результати(параметри), тунінга
+   # це клас-контейнер для зберігання результатів навчання моделі 
     
-    
-# тут прописано функція для імпорта LinearRegression
+# тут прописано функція для імпорта LinearRegression 
+# порівняння з іншими моделями
 def train_baseline_linear(
-    X_train: np.ndarray,
-    y_train: np.ndarray,
-) -> ModelResult:
+    X_train: np.ndarray, # Навчальні ознаки
+    y_train: np.ndarray, # Цільова змінна
+) -> ModelResult: 
+    
+    # створення моделі 
     model = LinearRegression()
+    
+    # - ця строчка яка навчає модель на тренувальних даних   
     model.fit(X_train, y_train)
     
     return ModelResult(
@@ -31,6 +38,7 @@ def train_ridge(
     X_train: np.ndarray,
     y_train: np.ndarray,
 ) -> ModelResult:
+    # Створення моделі:
     model = Ridge()
     model.fit(X_train, y_train)
 
@@ -42,9 +50,11 @@ def train_ridge(
 # це функція для імпорта GridSearchCV ( це fine tuning )
 def train_tuning (
     X_train: np.ndarray,
-    y_train: np.ndarray, 
-    cv: int = 5,
+    y_train: np.ndarray,
+    cv: int = 5, 
 ) -> ModelResult: 
+    
+    # тут ми перевіряємо tuning 
     param_grid = {
         "alpha": [0.1, 1.0, 10.0, 100.0],
 }
@@ -81,8 +91,8 @@ def train_random_forest_with_tuning(
     }
     
     base_model = RandomForestRegressor( # модель машинного навчання для регресії
-        random_state=42,
-        n_jobs = -1,
+        random_state=42, # Для відтворюваності результатів
+        n_jobs = -1, # Паралельне навчання
     )
     
     grid = GridSearchCV(
