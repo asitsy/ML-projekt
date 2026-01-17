@@ -33,6 +33,9 @@ def prepare_data(
     test_size: float = 0.2,
     random_state: int = 42
 ):
+    # Remove rows with missing target values
+    df = df.dropna(subset=[TARGET_COLUMN])
+    
     if TARGET_COLUMN not in df.columns:
         raise ValueError(f"Target column '{TARGET_COLUMN}' not found in dataset")
 
