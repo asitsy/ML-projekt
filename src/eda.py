@@ -12,17 +12,17 @@ from src.data_loads import load_data
 
 def basic_data_info(df: pd.DataFrame) -> None:
     
-    print(" BASIC DATA INFO")
-    print(f"Dataset shape: {df.shape}")
+    print(" BASIC DATA INFO ")
+    print(f"Dataset shape: {df.shape}") #df.shape повертає рядки та колонки
 
     print("\nData types:")
-    print(df.dtypes)
+    print(df.dtypes) # показує назву кожної колонки і її тип
 
     print("\nMissing values per column:")
-    print(df.isnull().sum())
+    print(df.isnull().sum()) # показує скільки в нас пропусків (sum скільки у кожній колонці)
     
     
-def statistical_summary(df: pd.DataFrame) -> pd.DataFrame:
+def statistical_summary(df: pd.DataFrame) -> pd.DataFrame: 
 
     print("\n STATISTICAL_SUMMARY (NUMERIC FEATURES) ")
 
@@ -35,27 +35,27 @@ def statistical_summary(df: pd.DataFrame) -> pd.DataFrame:
 def correlation_matrix(df: pd.DataFrame, save_path: str | None = None) -> pd.DataFrame:
     
     numeric_df = df[NUMERIC_FEATURES]
-    corr = numeric_df.corr()
+    corr = numeric_df.corr() # рахує кореляцію між числовими змінними
     
-    plt.figure(figsize=(12, 8))
+    plt.figure(figsize=(12, 8)) # тут створюється графік
     sns.heatmap(
         corr,
-        cmap ="coolwarm",
+        cmap ="coolwarm", # редагування стилю
         linewidths = 0.5
     )
     plt.title("Correlation Matrix (Numeric Features)")
     
-    if save_path:
+    if save_path:                               
         plt.savefig(save_path, bbox_inches = "tight")
         
     plt.show()
     return corr
 
-def target_distribution(df: pd.DataFrame) -> None:
+def target_distribution(df: pd.DataFrame) -> None: # аналіз змінної
     
     plt.figure(figsize=(8, 5))
-    sns.histplot(df[TARGET_COLUMN], bins = 30, kde=True)
+    sns.histplot(df[TARGET_COLUMN], bins = 30, kde=True) # показує розподіл значень
     plt.title(f"Distribution of {TARGET_COLUMN}")
     plt.xlabel(TARGET_COLUMN)
     plt.ylabel("Count")
-    plt.show()
+    plt.show() 
