@@ -22,5 +22,14 @@ def basic_data_info(df: pd.DataFrame) -> None:
     print("\nMissing values per column:")
     print(df.isnull().sum())
     
-def statistical_summary()
+    
+def statistical_summary(df: pd.DataFrame) -> pd.DataFrame:
+
+    print("\n STATISTICAL_SUMMARY (NUMERIC FEATURES) ")
+
+    numeric_df = df[NUMERIC_FEATURES]
+    summary = numeric_df.describe()
+
+    print(summary)
+    return summary
     
