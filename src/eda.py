@@ -5,9 +5,22 @@ import numpy as np
 import pandas as pd 
 
 import matplotlib.pyplot as plt
+import seaborn as sns
 
-from src.config import (DATA_PATH, TARGET_COLUMN, NUMERIC_FEATURES, CATEGORICAL_FEATURES)
+from src.config import (DATA_PATH, TARGET_COLUMN, NUMERIC_FEATURES)
 from src.data_loads import load_data
 
-from pathlib import Path
-from dataclasses import dataclass
+
+def basic_data_info(df: pd.DataFrame) -> None:
+    
+    print("=== BASIC DATA INFO ===")
+    print(f"Dataset shape: {df.shape}")
+
+    print("\nData types:")
+    print(df.dtypes)
+
+    print("\nMissing values per column:")
+    print(df.isnull().sum())
+    
+def statistical_summary()
+    
