@@ -33,3 +33,21 @@ def statistical_summary(df: pd.DataFrame) -> pd.DataFrame:
     print(summary)
     return summary
     
+def correlation_matrix(df: pd.DataFrame, save_path: str | None = None) -> pd.DataFrame:
+    
+    numeric_df = df[NUMERIC_FEATURES]
+    corr = numeric_df.corr()
+    
+    plt.figure(figsize=(12, 8))
+    sns.heatmap(
+        corr,
+        cmap ="coolwarm",
+        linewidths = 0.5
+    )
+    plt.title("Correlation Matrix (Numeric Features)")
+    
+    if save_path:
+        plt.savefig(save_path, bbox_inches = "tight")
+        
+    plt.show()
+    return corr 
