@@ -9,18 +9,18 @@ from sklearn.impute import SimpleImputer
 from config import TARGET_COLUMN, NUMERIC_FEATURES, CATEGORICAL_FEATURES
 
 
-def build_preprocessing_pipeline() -> ColumnTransformer:
+def build_preprocessing_pipeline() -> ColumnTransformer: # Pipeline для ЧИСЛОВИХ колонок
     numeric_pipeline = Pipeline(steps=[
-        ("imputer", SimpleImputer(strategy="median")),
+        ("imputer", SimpleImputer(strategy="median")),  # Якщо є пропущені значення — замінюємо їх медіаною
         ("scaler", StandardScaler())
     ])
 
     categorical_pipeline = Pipeline(steps=[
-        ("imputer", SimpleImputer(strategy="most_frequent")),
-        ("encoder", OneHotEncoder(handle_unknown="ignore"))
+        ("imputer", SimpleImputer(strategy="most_frequent")),# Якщо є пропуски — заповнюємо найчастішим значенням
+        ("encoder", OneHotEncoder(handle_unknown="ignore")) # Перетворення категорії на One-hot
     ])
 
-    preprocessor = ColumnTransformer(transformers=[
+    preprocessor = ColumnTransformer(transformers=[ # ColumnTransformer обʼєднує обидва pipeline
         ("num", numeric_pipeline, NUMERIC_FEATURES),
         ("cat", categorical_pipeline, CATEGORICAL_FEATURES)
     ])
@@ -39,10 +39,10 @@ def prepare_data(
     if TARGET_COLUMN not in df.columns:
         raise ValueError(f"Target column '{TARGET_COLUMN}' not found in dataset")
 
-    X = df.drop(columns=[TARGET_COLUMN])
-    y = df[TARGET_COLUMN]
+    X = df.drop(columns=[TARGET_COLUMN]) # X — всі колонки, окрім цільової
+    y = df[TARGET_COLUMN] # y — цільова змінна, яку будемо передбачати
 
-    X_train, X_test, y_train, y_test = train_test_split(
+    X_train, X_test, y_train, y_test = train_test_split( # Ділимо дані на тренувальні та тестові
         X,
         y,
         test_size=test_size,
@@ -51,7 +51,7 @@ def prepare_data(
 
     preprocessor = build_preprocessing_pipeline()
 
-    X_train_processed = preprocessor.fit_transform(X_train)
+    X_train_processed = preprocessor.fit_transform(X_train) # Навчаємо preprocessing на TRAIN даних
     X_test_processed = preprocessor.transform(X_test)
 
     return X_train_processed, X_test_processed, y_train, y_test, preprocessor
