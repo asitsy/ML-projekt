@@ -6,8 +6,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-from src.config import (DATA_PATH, TARGET_COLUMN, NUMERIC_FEATURES)
-from src.data_loads import load_data
+from config import (DATA_PATH, TARGET_COLUMN, NUMERIC_FEATURES)
+from data_loads import load_data
 
 
 def basic_data_info(df: pd.DataFrame) -> None:
@@ -59,3 +59,21 @@ def target_distribution(df: pd.DataFrame) -> None: # аналіз змінної
     plt.xlabel(TARGET_COLUMN)
     plt.ylabel("Count")
     plt.show() 
+
+# STREAMLIT DEPLOY
+def plot_correlation_matrix(df):
+    """
+    Plot correlation matrix for numerical features.
+    Returns matplotlib figure.
+    """
+    corr = df.select_dtypes(include="number").corr()
+
+    fig, ax = plt.subplots(figsize=(10, 8))
+    sns.heatmap(
+        corr,
+        cmap="coolwarm",
+        center=0,
+        ax=ax,
+    )
+
+    return fig

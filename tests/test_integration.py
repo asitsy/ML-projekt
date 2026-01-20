@@ -1,13 +1,13 @@
 import pytest
 
-from src.data_loads import load_data
-from src.models import (
+from data_loads import load_data
+from models import (
     train_baseline_linear,
     train_ridge,
     train_tuning,
     train_random_forest_with_tuning,
 )
-from src.preprocessing import prepare_data
+from preprocessing import prepare_data
 
 @pytest.fixture(scope="module")
 def prepared_data():

@@ -1,6 +1,6 @@
 import numpy as np
 
-from src.models import (
+from models import (
     ModelResult,
     train_baseline_linear,
     train_ridge,
@@ -104,7 +104,7 @@ def test_train_random_forest_with_tuning():
     
     import numpy as np
 
-from src.models import (
+from models import (
     ModelResult,
     train_baseline_linear,
     train_ridge,

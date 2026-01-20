@@ -1,7 +1,7 @@
 
 
 import pandas as pd
-from src.config import DATA_PATH
+from config import DATA_PATH
 
 def load_data() -> pd.DataFrame:
     if not DATA_PATH.exists():

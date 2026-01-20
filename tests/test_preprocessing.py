@@ -1,5 +1,5 @@
-from src.data_loads import load_data
-from src.preprocessing import prepare_data
+from data_loads import load_data
+from preprocessing import prepare_data
 
 def test_prepare_data_runs():
     df = load_data()

@@ -1,20 +1,58 @@
 import streamlit as st
-import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
 
-st.title("ML Model Evaluation Dashboard")
+from run import main
+from data_loads import load_data
+from eda import plot_correlation_matrix
 
-results = pd.read_csv("results.csv")
+
+st.set_page_config(
+    page_title="ML Project Dashboard",
+    layout="centered",
+)
+
+st.title("📊 ML Project Dashboard")
+
+st.write(
+    "This dashboard presents model evaluation results "
+    "Social media Impact."
+)
+
+# MODEL EVALUATION
+st.header("Model evaluation")
+
+with st.spinner("Running ML pipeline..."):
+    results = main()
+
+if results is None or results.empty:
+    st.error("No evaluation results available.")
+    st.stop()
 
 st.subheader("Model comparison")
-st.dataframe(results)
+st.dataframe(results, use_container_width=True)
 
 best_model = results.sort_values("rmse").iloc[0]
 
 st.success(
-    f"Best model: {best_model['model']}\n"
-    f"RMSE: {best_model['rmse']:.3f}, R²: {best_model['r2']:.3f}"
+    f"🏆 Best model: {best_model['model']}\n\n"
+    f"RMSE: {best_model['rmse']:.3f}\n"
+    f"R²: {best_model['r2']:.3f}"
 )
 
-st.bar_chart(
-    results.set_index("model")[["rmse"]]
-)
+st.subheader("Evaluation metrics")
+
+st.write("**RMSE (lower is better)**")
+st.bar_chart(results.set_index("model")[["rmse"]])
+
+st.write("**R² (higher is better)**")
+st.bar_chart(results.set_index("model")[["r2"]])
+
+# EDA CORRELATION MATRIX
+st.header("Exploratory Data Analysis")
+
+with st.expander("Show correlation matrix"):
+    df = load_data()
+
+    fig = plot_correlation_matrix(df)
+    st.pyplot(fig)
