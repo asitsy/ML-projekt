@@ -8,7 +8,7 @@ import seaborn as sns
 
 from config import (DATA_PATH, TARGET_COLUMN, NUMERIC_FEATURES)
 from data_loads import load_data
-
+import numpy as np
 
 def basic_data_info(df: pd.DataFrame) -> None:
     
@@ -62,18 +62,27 @@ def target_distribution(df: pd.DataFrame) -> None: # аналіз змінної
 
 # STREAMLIT DEPLOY
 def plot_correlation_matrix(df):
-    """
-    Plot correlation matrix for numerical features.
-    Returns matplotlib figure.
-    """
-    corr = df.select_dtypes(include="number").corr()
+    numeric_df = df.select_dtypes(include=['number'])
+    corr = numeric_df.corr()
 
-    fig, ax = plt.subplots(figsize=(10, 8))
+    # створюємо маску для верхнього трикутника, щоб не дублювати
+    mask = np.triu(np.ones_like(corr, dtype=bool))
+
+    fig, ax = plt.subplots(figsize=(12, 8))
+
     sns.heatmap(
         corr,
+        mask=mask,
         cmap="coolwarm",
         center=0,
-        ax=ax,
+        annot=True,
+        fmt=".2f",
+        linewidths=.5,
+        cbar_kws={"shrink": .8},
+        ax=ax
     )
+
+    ax.set_xticklabels(ax.get_xticklabels(), rotation=45, ha="right")
+    ax.set_yticklabels(ax.get_yticklabels(), rotation=0)
 
     return fig
