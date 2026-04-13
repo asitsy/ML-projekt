@@ -6,7 +6,6 @@ from run import main
 from data_loads import load_data
 from eda import plot_correlation_matrix
 
-
 st.set_page_config(
     page_title="ML Project Dashboard",
     layout="centered",
