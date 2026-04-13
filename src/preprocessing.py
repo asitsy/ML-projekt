@@ -8,19 +8,18 @@ from sklearn.impute import SimpleImputer
 
 from src.config import TARGET_COLUMN, NUMERIC_FEATURES, CATEGORICAL_FEATURES
 
-
-def build_preprocessing_pipeline() -> ColumnTransformer: # Pipeline для ЧИСЛОВИХ колонок
+def build_preprocessing_pipeline() -> ColumnTransformer:
     numeric_pipeline = Pipeline(steps=[
-        ("imputer", SimpleImputer(strategy="median")),  # Якщо є пропущені значення — замінюємо їх медіаною
+        ("imputer", SimpleImputer(strategy="median")),
         ("scaler", StandardScaler())
     ])
 
     categorical_pipeline = Pipeline(steps=[
-        ("imputer", SimpleImputer(strategy="most_frequent")),# Якщо є пропуски — заповнюємо найчастішим значенням
-        ("encoder", OneHotEncoder(handle_unknown="ignore")) # Перетворення категорії на One-hot
+        ("imputer", SimpleImputer(strategy="most_frequent")),
+        ("encoder", OneHotEncoder(handle_unknown="ignore"))
     ])
 
-    preprocessor = ColumnTransformer(transformers=[ # ColumnTransformer обʼєднує обидва pipeline
+    preprocessor = ColumnTransformer(transformers=[
         ("num", numeric_pipeline, NUMERIC_FEATURES),
         ("cat", categorical_pipeline, CATEGORICAL_FEATURES)
     ])
@@ -35,14 +34,19 @@ def prepare_data(
 ):
     # Remove rows with missing target values
     df = df.dropna(subset=[TARGET_COLUMN])
-    
+
     if TARGET_COLUMN not in df.columns:
         raise ValueError(f"Target column '{TARGET_COLUMN}' not found in dataset")
 
-    X = df.drop(columns=[TARGET_COLUMN]) # X — всі колонки, окрім цільової
-    y = df[TARGET_COLUMN] # y — цільова змінна, яку будемо передбачати
+    # 🔥 FIX: convert numeric columns properly (critical for Streamlit Cloud)
+    df[NUMERIC_FEATURES] = df[NUMERIC_FEATURES].apply(
+        pd.to_numeric, errors="coerce"
+    )
 
-    X_train, X_test, y_train, y_test = train_test_split( # Ділимо дані на тренувальні та тестові
+    X = df.drop(columns=[TARGET_COLUMN])
+    y = df[TARGET_COLUMN]
+
+    X_train, X_test, y_train, y_test = train_test_split(
         X,
         y,
         test_size=test_size,
@@ -51,7 +55,7 @@ def prepare_data(
 
     preprocessor = build_preprocessing_pipeline()
 
-    X_train_processed = preprocessor.fit_transform(X_train) # Навчаємо preprocessing на TRAIN даних
+    X_train_processed = preprocessor.fit_transform(X_train)
     X_test_processed = preprocessor.transform(X_test)
 
     return X_train_processed, X_test_processed, y_train, y_test, preprocessor
