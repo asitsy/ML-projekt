@@ -1,14 +1,14 @@
 import pandas as pd  
 
-from data_loads import load_data
-from preprocessing import prepare_data
-from models import (
+from src.data_loads import load_data
+from src.preprocessing import prepare_data
+from src.models import (
     train_baseline_linear,
     train_ridge,
     train_tuning,
     train_random_forest_with_tuning,
 )
-from evaluation import evaluate_model
+from src.evaluation import evaluate_model
 
 def main():
     df = load_data()

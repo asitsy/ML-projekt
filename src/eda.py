@@ -6,8 +6,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-from config import (DATA_PATH, TARGET_COLUMN, NUMERIC_FEATURES)
-from data_loads import load_data
+from src.config import (DATA_PATH, TARGET_COLUMN, NUMERIC_FEATURES)
+from src.data_loads import load_data
 import numpy as np
 
 def basic_data_info(df: pd.DataFrame) -> None:

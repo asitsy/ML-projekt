@@ -2,9 +2,9 @@ import streamlit as st
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-from run import main
-from data_loads import load_data
-from eda import plot_correlation_matrix
+from src.run import main
+from src.data_loads import load_data
+from src.eda import plot_correlation_matrix
 
 
 st.set_page_config(

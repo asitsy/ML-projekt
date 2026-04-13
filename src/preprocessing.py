@@ -6,7 +6,7 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.impute import SimpleImputer
 
-from config import TARGET_COLUMN, NUMERIC_FEATURES, CATEGORICAL_FEATURES
+from src.config import TARGET_COLUMN, NUMERIC_FEATURES, CATEGORICAL_FEATURES
 
 
 def build_preprocessing_pipeline() -> ColumnTransformer: # Pipeline для ЧИСЛОВИХ колонок
